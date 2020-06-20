@@ -12,7 +12,7 @@ const MainSection: FunctionComponent<{
   const [pexelsPhotosData, setPexelsPhotosData] = useState(
     initialPexelsPhotosData,
   )
-  const [pexelsPhotosUrl, setPexelsPhotosUrl] = useState('')
+  const [currentPage, setCurrentPage] = useState('')
   const isInitialMount = useRef(true)
 
   useEffect(() => {
@@ -22,25 +22,25 @@ const MainSection: FunctionComponent<{
       console.log('in useEffect update')
       async function getPexelsPhotosFn() {
         const data: PexelsPhotosApiRespSchema = await fetchPexelsPhotos(
-          pexelsPhotosUrl,
+          currentPage,
         )
         setPexelsPhotosData(data)
       }
 
       getPexelsPhotosFn()
     }
-  }, [pexelsPhotosUrl])
+  }, [currentPage])
 
   const handlePrevBtnClick = () =>
-    setPexelsPhotosUrl(pexelsPhotosData?.prev_page || '')
+    setCurrentPage(pexelsPhotosData?.prev_page || '')
   const handleNextBtnClick = () =>
-    setPexelsPhotosUrl(pexelsPhotosData?.next_page || '')
+    setCurrentPage(pexelsPhotosData?.next_page || '')
 
   return (
     <MainSectionWrapper>
       <p>prev_page: {pexelsPhotosData?.prev_page}</p>
       <p>next_page: {pexelsPhotosData?.next_page}</p>
-      <p>pexelsPhotosUrl: {pexelsPhotosUrl}</p>
+      <p>currentPage: {currentPage}</p>
       <StyledButton
         onClick={handlePrevBtnClick}
         disabled={!pexelsPhotosData?.prev_page}
