@@ -1,0 +1,93 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "react-hooks"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:react/recommended"
+  ],
+  "overrides": [
+    {
+      "ecmaFeatures": {
+        "jsx": true,
+        "modules": true
+      },
+      "files": ["*.ts", "*.tsx"],
+      "parserOptions": {
+        "extraFileExtensions": [".ts", ".tsx"],
+        "project": "./tsconfig.json"
+      },
+      "rules": {
+        "@typescript-eslint/member-delimiter-style": [
+          "error",
+          {
+            "multiline": {
+              "delimiter": "none",
+              "requireLast": true
+            },
+            "singleline": {
+              "delimiter": "semi",
+              "requireLast": false
+            }
+          }
+        ],
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-vars": ["off"],
+        "@typescript-eslint/explicit-function-return-type": "off",
+        /**
+          npm:eslint-plugin-react-hooks 官方 hooks lint rules
+        */
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "react/display-name": "off",
+        "react/jsx-sort-props": "off",
+        /**
+          typescript replace
+        */
+        "react/prop-types": "off",
+        /** React as a global variable by tsconfig.allowUmdGlobalAccess=true */
+        "react/react-in-jsx-scope": "off",
+        "sort-imports": "off",
+        "sort-keys": "off",
+        "no-shadow": "warn"
+      }
+    },
+    {
+      "files": ["redux/**/*", "api/debug/**"],
+      "rules": {
+        "sort-keys": ["error"]
+      }
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "parser": "babel-eslint",
+      "rules": {
+        "@typescript-eslint/indent": ["error", 2]
+      }
+    },
+    {
+      "files": ["*.config.js"],
+      "parser": "babel-eslint",
+      "env": {
+        "node": true
+      },
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off"
+      }
+    },
+    {
+      "files": ["*.stories.tsx", "*.bundle.js"],
+      "rules": {
+        "@typescript-eslint/ban-ts-ignore": "off",
+        "no-var": "off"
+      }
+    }
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}
