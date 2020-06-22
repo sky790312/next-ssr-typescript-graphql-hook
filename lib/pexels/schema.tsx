@@ -27,4 +27,5 @@ export interface PexelsPhotoSrcSchema {
   portrait: string
   small: string
   tiny: string
+  original: string
 }
