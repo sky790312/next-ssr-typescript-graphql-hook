@@ -8,6 +8,7 @@ import {
 } from '@/lib/pexels/schema'
 import { useState, useEffect, useRef } from 'react'
 import Modal from '@/components/common/Modal'
+import Spinner from '@/components/common/Spinner'
 
 const MainSection: FunctionComponent<{
   initialPexelsPhotosData: PexelsPhotosApiRespSchema
@@ -18,6 +19,7 @@ const MainSection: FunctionComponent<{
   >(initialPexelsPhotosData)
   const [currentPage, setCurrentPage] = useState<string>('')
   const [isPhotoModalShow, setIsPhotoModalShow] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [currentPhoto, setCurrentPhoto] = useState<PexelsPhotoSchema | null>(
     null,
   )
@@ -29,10 +31,12 @@ const MainSection: FunctionComponent<{
     } else {
       console.log('in MainSection useEffect update')
       async function getPexelsPhotosFn() {
+        setIsLoading(true)
         const data: PexelsPhotosApiRespSchema = await fetchPexelsPhotos(
           currentPage,
         )
         setPexelsPhotosData(data)
+        setIsLoading(false)
       }
 
       getPexelsPhotosFn()
@@ -66,8 +70,14 @@ const MainSection: FunctionComponent<{
         </StyledButton>
       </div>
       <PhotosContainer>
+        {isLoading && <Spinner />}
+
         {pexelsPhotosData?.photos.map(photo => (
-          <img src={photo.src.tiny} onClick={() => handlePhotoClick(photo)} />
+          <img
+            key={photo.id}
+            src={photo.src.tiny}
+            onClick={() => handlePhotoClick(photo)}
+          />
         ))}
         <Modal
           isShow={isPhotoModalShow}
@@ -103,6 +113,7 @@ const StyledButton = styled.button`
 `
 
 const PhotosContainer = styled.div`
+  position: relative;
   display: flex;
   flex-wrap: wrap;
 
