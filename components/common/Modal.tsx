@@ -1,22 +1,23 @@
-import { FunctionComponent } from 'react'
+import { FunctionComponent, ReactNode } from 'react'
 import ReactDOM from 'react-dom'
 import styled from 'styled-components'
 import { isClient } from '@/utils'
 import { Color } from '@/utils/constants/Color'
 
 const Modal: FunctionComponent<{
-  isShow: boolean
+  shouldShow: boolean
   onClose: () => void
-}> = props => {
+  children: ReactNode
+}> = ({ shouldShow, onClose, children }) => {
   const onOverlayClicked = e => {
     if (e.target.className !== 'modal-wrapper') {
       return
     }
 
-    props.onClose()
+    onClose()
   }
 
-  return isClient() && props.isShow
+  return isClient() && shouldShow
     ? ReactDOM.createPortal(
         <StyledModal>
           <div className='modal-overlay' />
@@ -35,12 +36,12 @@ const Modal: FunctionComponent<{
                   className='close-button'
                   data-dismiss='modal'
                   aria-label='Close'
-                  onClick={props.onClose}
+                  onClick={onClose}
                 >
                   <span aria-hidden='true'>&times;</span>
                 </button>
               </div>
-              {props.children}
+              {children}
             </div>
           </div>
         </StyledModal>,

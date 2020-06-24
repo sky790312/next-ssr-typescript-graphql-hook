@@ -7,8 +7,11 @@ import {
   PexelsPhotoSchema,
 } from '@/lib/pexels/schema'
 import { useState, useEffect, useRef } from 'react'
-import Modal from '@/components/common/Modal'
-import Spinner from '@/components/common/Spinner'
+import PexelsSectionArrows from '@/components/ssr/PexelsSectionArrows'
+import PexelsSectionPhohos from '@/components/ssr/PexelsSectionPhohos'
+import PexelsSectionPhohoModal from '@/components/ssr/PexelsSectionPhohoModal'
+
+import useFetch from '@/hooks/useFetch'
 
 const PexelsSection: FunctionComponent<{
   initialPexelsPhotosData: PexelsPhotosApiRespSchema
@@ -17,18 +20,26 @@ const PexelsSection: FunctionComponent<{
     PexelsPhotosApiRespSchema
   >(initialPexelsPhotosData)
   const [currentPage, setCurrentPage] = useState<string>('')
-  const [isPhotoModalShow, setIsPhotoModalShow] = useState<boolean>(false)
+  const [shouldPhotoModalShow, setShouldPhotoModalShow] = useState<boolean>(
+    false,
+  )
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [currentPhoto, setCurrentPhoto] = useState<PexelsPhotoSchema | null>(
     null,
   )
   const isInitialMount = useRef(true)
 
+  const { data, loading, error } = useFetch(
+    'https://jsonplaceholder.typicode.com/todos/1',
+  )
+  console.log('in')
+  console.log(data)
+
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false
     } else {
-      async function getPexelsPhotosFn() {
+      const doFetchPexelsPhotos = async () => {
         setIsLoading(true)
         const data: PexelsPhotosApiRespSchema = await fetchPexelsPhotos(
           currentPage,
@@ -37,62 +48,38 @@ const PexelsSection: FunctionComponent<{
         setIsLoading(false)
       }
 
-      getPexelsPhotosFn()
+      doFetchPexelsPhotos()
     }
   }, [currentPage])
 
-  const handlePrevBtnClick = () =>
-    setCurrentPage(pexelsPhotosData?.prev_page || '')
-  const handleNextBtnClick = () =>
-    setCurrentPage(pexelsPhotosData?.next_page || '')
+  const handleArrowClick = page => setCurrentPage(page)
 
   const handlePhotoClick = photo => {
     setCurrentPhoto(photo)
-    setIsPhotoModalShow(true)
+    setShouldPhotoModalShow(true)
+  }
+
+  const onPhotoModalClose = () => {
+    setCurrentPhoto(null)
+    setShouldPhotoModalShow(false)
   }
 
   return (
     <PexelsSectionContainer>
-      <div className='text-center'>
-        <StyledButton
-          onClick={handlePrevBtnClick}
-          disabled={!pexelsPhotosData?.prev_page}
-        >
-          prev
-        </StyledButton>
-        <StyledButton
-          onClick={handleNextBtnClick}
-          disabled={!pexelsPhotosData?.next_page}
-        >
-          next
-        </StyledButton>
-      </div>
-      <PhotosContainer>
-        {isLoading && <Spinner />}
-        <PhotosInnerContainer className={isLoading ? 'loading' : ''}>
-          {pexelsPhotosData?.photos.map(photo => (
-            <img
-              key={photo.id}
-              src={photo.src.tiny}
-              onClick={() => handlePhotoClick(photo)}
-            />
-          ))}
-        </PhotosInnerContainer>
-        <Modal
-          isShow={isPhotoModalShow}
-          onClose={() => setIsPhotoModalShow(false)}
-        >
-          <CurrentPhotoModalContainer>
-            <h3 className='text-center'>
-              check the origin photo:{' '}
-              <a href={currentPhoto?.src.original} target='_blank'>
-                link
-              </a>
-            </h3>
-            <img src={currentPhoto?.src.medium} />
-          </CurrentPhotoModalContainer>
-        </Modal>
-      </PhotosContainer>
+      <PexelsSectionArrows
+        pexelsPhotosData={pexelsPhotosData}
+        handleArrowClick={handleArrowClick}
+      />
+      <PexelsSectionPhohos
+        isLoading={isLoading}
+        pexelsPhotosData={pexelsPhotosData}
+        handlePhotoClick={handlePhotoClick}
+      />
+      <PexelsSectionPhohoModal
+        shouldShow={shouldPhotoModalShow}
+        onClose={onPhotoModalClose}
+        currentPhoto={currentPhoto}
+      />
     </PexelsSectionContainer>
   )
 }
@@ -103,45 +90,4 @@ const PexelsSectionContainer = styled.div`
   background-color: ${Color.secondary};
   color: ${Color.white};
   padding: 50px;
-`
-
-const StyledButton = styled.button`
-  margin: 0 3px;
-  padding: 5px 10px;
-  cursor: ${props => (props.disabled ? 'default' : 'pointer')};
-`
-
-const PhotosContainer = styled.div`
-  position: relative;
-  margin: 40px 0;
-`
-
-const PhotosInnerContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  transition: 0.3s;
-
-  &.loading {
-    opacity: 0.3;
-    background-color: ${Color.white};
-  }
-
-  img {
-    max-width: 280px;
-    max-height: 200px;
-    cursor: pointer;
-    transition: 0.3s;
-    margin: 20px auto;
-
-    &:hover {
-      opacity: 0.8;
-      transform: scale(1.05);
-    }
-  }
-`
-
-const CurrentPhotoModalContainer = styled.div`
-  h3 {
-    margin-top: 0;
-  }
 `
