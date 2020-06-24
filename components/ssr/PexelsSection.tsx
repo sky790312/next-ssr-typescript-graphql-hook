@@ -10,10 +10,9 @@ import { useState, useEffect, useRef } from 'react'
 import Modal from '@/components/common/Modal'
 import Spinner from '@/components/common/Spinner'
 
-const MainSection: FunctionComponent<{
+const PexelsSection: FunctionComponent<{
   initialPexelsPhotosData: PexelsPhotosApiRespSchema
 }> = ({ initialPexelsPhotosData }) => {
-  console.log('in MainSection component')
   const [pexelsPhotosData, setPexelsPhotosData] = useState<
     PexelsPhotosApiRespSchema
   >(initialPexelsPhotosData)
@@ -29,7 +28,6 @@ const MainSection: FunctionComponent<{
     if (isInitialMount.current) {
       isInitialMount.current = false
     } else {
-      console.log('in MainSection useEffect update')
       async function getPexelsPhotosFn() {
         setIsLoading(true)
         const data: PexelsPhotosApiRespSchema = await fetchPexelsPhotos(
@@ -54,7 +52,7 @@ const MainSection: FunctionComponent<{
   }
 
   return (
-    <MainSectionWrapper>
+    <PexelsSectionContainer>
       <div className='text-center'>
         <StyledButton
           onClick={handlePrevBtnClick}
@@ -71,14 +69,15 @@ const MainSection: FunctionComponent<{
       </div>
       <PhotosContainer>
         {isLoading && <Spinner />}
-
-        {pexelsPhotosData?.photos.map(photo => (
-          <img
-            key={photo.id}
-            src={photo.src.tiny}
-            onClick={() => handlePhotoClick(photo)}
-          />
-        ))}
+        <PhotosInnerContainer className={isLoading ? 'loading' : ''}>
+          {pexelsPhotosData?.photos.map(photo => (
+            <img
+              key={photo.id}
+              src={photo.src.tiny}
+              onClick={() => handlePhotoClick(photo)}
+            />
+          ))}
+        </PhotosInnerContainer>
         <Modal
           isShow={isPhotoModalShow}
           onClose={() => setIsPhotoModalShow(false)}
@@ -94,13 +93,13 @@ const MainSection: FunctionComponent<{
           </CurrentPhotoModalContainer>
         </Modal>
       </PhotosContainer>
-    </MainSectionWrapper>
+    </PexelsSectionContainer>
   )
 }
 
-export default MainSection
+export default PexelsSection
 
-const MainSectionWrapper = styled.div`
+const PexelsSectionContainer = styled.div`
   background-color: ${Color.secondary};
   color: ${Color.white};
   padding: 50px;
@@ -114,8 +113,18 @@ const StyledButton = styled.button`
 
 const PhotosContainer = styled.div`
   position: relative;
+  margin: 40px 0;
+`
+
+const PhotosInnerContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  transition: 0.3s;
+
+  &.loading {
+    opacity: 0.3;
+    background-color: ${Color.white};
+  }
 
   img {
     max-width: 280px;

@@ -1,5 +1,9 @@
 import { FunctionComponent } from 'react'
-import Example from '@/components/ssr/Example'
+import Spinner from '@/components/common/Spinner'
+import dynamic from 'next/dynamic'
+const PexelsSection = dynamic(() => import('@/components/ssr/PexelsSection'), {
+  loading: () => <Spinner />,
+})
 import { fetchPexelsPhotos } from '@/lib/pexels'
 import { PexelsPhotosApiRespSchema } from '@/lib/pexels/schema'
 
@@ -9,7 +13,7 @@ const ssrPage: FunctionComponent<{
   return (
     <>
       <h3 className='text-center'>ssr example with pexels public api.</h3>
-      <Example initialPexelsPhotosData={initialPexelsPhotosData} />
+      <PexelsSection initialPexelsPhotosData={initialPexelsPhotosData} />
     </>
   )
 }
