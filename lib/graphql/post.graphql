@@ -1,0 +1,16 @@
+query Posts {
+  posts {
+    id
+    title
+  }
+}
+
+# query PostDetail($postId: ID!) {
+#   post(id: $postId) {
+#     id
+#     title
+#     author {
+#       name
+#     }
+#   }
+# }

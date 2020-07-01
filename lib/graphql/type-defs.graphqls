@@ -4,6 +4,15 @@ type User {
   status: String!
 }
 
+type Post {
+  id: ID!
+  title: String!
+  description: String!
+  author: String!
+}
+
+
 type Query {
   viewer: User!
+  posts: [Post!]!
 }

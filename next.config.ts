@@ -41,15 +41,6 @@ module.exports = {
     config.resolve.alias = {
       ...config.resolve.alias,
       '@': path.join(__dirname, '/'),
-      '@/lib': path.join(__dirname, 'lib/'),
-      '@/api': path.join(__dirname, 'api/'),
-      '@/schema': path.join(__dirname, 'schema/'),
-      '@/components': path.join(__dirname, 'components/'),
-      '@/pages': path.join(__dirname, 'pages/'),
-      '@/i18n': path.join(__dirname, 'i18n/'),
-      '@/assets': path.join(__dirname, 'assets/'),
-      '@/utils': path.join(__dirname, 'utils/'),
-      '@/.storybook': path.join(__dirname, '.storybook/'),
     }
 
     return config
