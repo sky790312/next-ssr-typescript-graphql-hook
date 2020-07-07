@@ -2,6 +2,7 @@ type User {
   id: ID!
   name: String!
   status: String!
+  friends: [User!]!
 }
 
 type Post {
@@ -13,6 +14,7 @@ type Post {
 
 
 type Query {
-  viewer: User!
+  me: User!
   posts: [Post!]!
+  users: [User!]!
 }

@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { useApollo } from '@/lib/graphql/apollo'
-import { ViewerDocument } from '@/lib/graphql/viewer.graphql'
+import { UsersDocument, MeDocument } from '@/lib/graphql/uesr.graphql'
 import { PostsDocument } from '@/lib/graphql/post.graphql'
 import { initializeApollo } from '@/lib/graphql/apollo'
 import Example from '@/components/index/Example'
@@ -28,7 +28,10 @@ export async function getStaticProps() {
 
   await Promise.all([
     apolloClient.query({
-      query: ViewerDocument,
+      query: MeDocument,
+    }),
+    apolloClient.query({
+      query: UsersDocument,
     }),
     apolloClient.query({
       query: PostsDocument,

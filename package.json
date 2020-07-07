@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "The application for ikala KOL service",
   "scripts": {
-    "codegen": "graphql-let",
-    "dev": "npm run codegen && npm run tsc:next && next",
-    "build": "npm run codegen && npm run tsc:next && next build",
+    "codegen": "npm run tsc:next && graphql-let",
+    "dev": "npm run codegen && next",
+    "build": "npm run codegen && next build",
     "start": "next start",
     "tsc:next": "tsc -p tsconfig-node.json"
   },

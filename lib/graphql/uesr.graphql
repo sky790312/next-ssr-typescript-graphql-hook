@@ -1,0 +1,18 @@
+query Users {
+  users {
+    id
+    name
+  }
+}
+
+query Me {
+  me {
+    id
+    name
+    status
+    friends {
+      id
+      name
+    }
+  }
+}
