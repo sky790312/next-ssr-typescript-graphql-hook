@@ -10,6 +10,7 @@ type Post {
   title: String!
   description: String!
   author: String!
+  recommendPosts: [Post!]!
 }
 
 
