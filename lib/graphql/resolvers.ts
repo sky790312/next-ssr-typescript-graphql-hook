@@ -3,31 +3,31 @@ import { ResolverContext } from './apollo'
 import usersData from '@/data/users'
 import postsData from '@/data/posts'
 
+const getPostDetail = postId =>
+  postsData.find(post => post.id === String(postId))
+
 const Query: Required<QueryResolvers<ResolverContext>> = {
   me: (_parent, _args, _context, _info) => usersData[0],
   users: (_parent, _args, _context, _info) => usersData,
   posts: (_parent, _args, _context, _info) => postsData,
-  // postDetail(_parent, _args, _context, _info) {
-  //   return { id: String(1), title: 'Post 1' }
-  // },
+  postDetail: (_parent, { id }, _context, _info) => getPostDetail(id),
 }
 
 // const Mutation = {}
 
+const getUserFreinds = friendIds =>
+  usersData.filter(user => friendIds.includes(Number(user.id)))
+
 const User = {
-  friends: (parent, args, context) => {
-    const { friendIds } = parent
-    return usersData.filter(user => friendIds.includes(parseInt(user.id, 10)))
-  },
+  friends: ({ friendIds }, args, context) => getUserFreinds(friendIds),
 }
 
+const getRecommendPosts = recommendPostIds =>
+  postsData.filter(post => recommendPostIds.includes(Number(post.id)))
+
 const Post = {
-  recommendPosts: (parent, args, context) => {
-    const { recommendPostIds } = parent
-    return postsData.filter(post =>
-      recommendPostIds.includes(parseInt(post.id, 10)),
-    )
-  },
+  recommendPosts: ({ recommendPostIds }, args, context) =>
+    getRecommendPosts(recommendPostIds),
 }
 
 const resolvers = {

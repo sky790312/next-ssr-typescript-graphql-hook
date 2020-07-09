@@ -15,7 +15,8 @@ type Post {
 
 
 type Query {
-  me: User!
   posts: [Post!]!
   users: [User!]!
+  me: User!
+  postDetail(id: ID): Post
 }

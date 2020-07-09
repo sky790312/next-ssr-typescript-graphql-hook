@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react'
 import { useUsersQuery, useMeQuery } from '@/lib/graphql/uesr.graphql'
-import { usePostsQuery } from '@/lib/graphql/post.graphql'
+import { usePostsQuery, usePostDetailQuery } from '@/lib/graphql/post.graphql'
 
 const Example: FunctionComponent = () => {
   const { data: usersData } = useUsersQuery()
@@ -9,6 +9,10 @@ const Example: FunctionComponent = () => {
   const { posts } = postsData!
   const { data: meData } = useMeQuery()
   const { me } = meData!
+  const { data: postData } = usePostDetailQuery({
+    variables: { postId: '1' },
+  })
+  console.log(postData)
   console.log(me)
   console.log(users)
   console.log(posts)

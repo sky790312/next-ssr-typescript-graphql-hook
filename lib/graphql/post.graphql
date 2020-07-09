@@ -9,12 +9,15 @@ query Posts {
   }
 }
 
-# query PostDetail($postId: ID!) {
-#   post(id: $postId) {
-#     id
-#     title
-#     author {
-#       name
-#     }
-#   }
-# }
+query PostDetail($postId: ID!) {
+  postDetail(id: $postId) {
+    id
+    title
+    author
+    recommendPosts {
+      id
+      title
+      author
+    }
+  }
+}
