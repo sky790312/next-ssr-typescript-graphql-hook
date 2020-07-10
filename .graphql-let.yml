@@ -4,4 +4,7 @@ plugins:
   - typescript
   - typescript-operations
   - typescript-react-apollo
+  - typescript-resolvers
+config:
+  defaultMapper: Partial<{T}>
 respectGitIgnore: true

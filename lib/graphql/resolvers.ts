@@ -4,7 +4,7 @@ import usersData from '@/data/users'
 import postsData from '@/data/posts'
 
 const getPostDetail = postId =>
-  postsData.find(post => post.id === String(postId))
+  postsData.find(post => post.id === String(postId)) || null
 
 const Query: Required<QueryResolvers<ResolverContext>> = {
   me: (_parent, _args, _context, _info) => usersData[0],

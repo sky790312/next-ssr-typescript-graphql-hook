@@ -2,7 +2,15 @@
  * fake data
  */
 
-const postsData = [
+export interface Post {
+  id: string
+  title: string
+  description: string
+  author: string
+  recommendPostIds: number[]
+}
+
+const postsData: Post[] = [
   {
     id: String(1),
     title: 'Post 1',
