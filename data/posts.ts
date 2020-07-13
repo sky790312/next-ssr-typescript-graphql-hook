@@ -2,7 +2,7 @@
  * fake data
  */
 
-export interface Post {
+export interface PostSchema {
   id: string
   title: string
   description: string
@@ -10,7 +10,7 @@ export interface Post {
   recommendPostIds: number[]
 }
 
-const postsData: Post[] = [
+const postsData: PostSchema[] = [
   {
     id: String(1),
     title: 'Post 1',

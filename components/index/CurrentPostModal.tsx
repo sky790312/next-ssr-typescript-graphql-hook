@@ -1,13 +1,13 @@
 import { FunctionComponent } from 'react'
 import styled from 'styled-components'
-import { Post } from '@/data/posts'
+import { PostSchema } from '@/data/posts'
 import Modal from '@/components/common/Modal'
 import { usePostDetailQuery } from '@/lib/graphql/post.graphql'
 
 const CurrentPostModal: FunctionComponent<{
   shouldShow: boolean
   onClose: () => void
-  currentPost: Post | null
+  currentPost: PostSchema | null
 }> = ({ shouldShow, onClose, currentPost }) => {
   const {
     data: postData,

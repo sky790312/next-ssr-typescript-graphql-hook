@@ -2,8 +2,9 @@ import { FunctionComponent } from 'react'
 import { useUsersQuery, useMeQuery } from '@/lib/graphql/uesr.graphql'
 import { usePostsQuery } from '@/lib/graphql/post.graphql'
 import CurrentPostModal from '@/components/index/CurrentPostModal'
-import { useState } from 'react'
-import { Post } from '@/data/posts'
+import Post from '@/components/index/Post'
+import { useState, useCallback } from 'react'
+import { PostSchema } from '@/data/posts'
 
 const Example: FunctionComponent = () => {
   const { data: usersData } = useUsersQuery()
@@ -13,12 +14,12 @@ const Example: FunctionComponent = () => {
   const { data: meData } = useMeQuery()
   const { me } = meData!
   const [shouldPostModalShow, setShouldPostModalShow] = useState<boolean>(false)
-  const [currentPost, setCurrentPost] = useState<Post | null>(null)
+  const [currentPost, setCurrentPost] = useState<PostSchema | null>(null)
 
-  const onPostClick = post => {
+  const onPostClick = useCallback(post => {
     setCurrentPost(post)
     setShouldPostModalShow(true)
-  }
+  }, [])
 
   const onPostModalClose = () => {
     setCurrentPost(null)
@@ -36,11 +37,7 @@ const Example: FunctionComponent = () => {
       </h3>
       <p>Initial fetch at server side(ssr). (Note: You're {me.status}).</p>
       {posts.map(post => (
-        <div key={post.id}>
-          <a onClick={() => onPostClick(post)}>
-            <span>title: {post.title}</span>
-          </a>
-        </div>
+        <Post key={post.id} post={post} onPostClick={onPostClick} />
       ))}
       <CurrentPostModal
         shouldShow={shouldPostModalShow}
