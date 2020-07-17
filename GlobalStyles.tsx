@@ -45,7 +45,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   a {
-    color: ${Color.primary};
+    color: ${Color.pink};
   }
 
   img {
