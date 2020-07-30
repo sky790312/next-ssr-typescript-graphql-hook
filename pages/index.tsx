@@ -4,7 +4,7 @@ import { useApollo } from '@/lib/graphql/apollo'
 import { UsersDocument, MeDocument } from '@/lib/graphql/uesr.graphql'
 import { PostsDocument } from '@/lib/graphql/post.graphql'
 import { initializeApollo } from '@/lib/graphql/apollo'
-import Example from '@/components/index/Example'
+import PostsSection from '@/components/index/PostsSection'
 
 const IndexPage: FunctionComponent<{ initialApolloState }> = ({
   initialApolloState,
@@ -17,7 +17,7 @@ const IndexPage: FunctionComponent<{ initialApolloState }> = ({
         <h1 className='text-center'>
           graphql example with local /api/graphql route.
         </h1>
-        <Example />
+        <PostsSection />
       </ApolloProvider>
     </>
   )

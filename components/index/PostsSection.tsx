@@ -1,11 +1,14 @@
 import { FunctionComponent, useState, useCallback } from 'react'
-import { useUsersQuery, useMeQuery } from '@/lib/graphql/uesr.graphql'
+import {
+  useUsersQuery,
+  useMeQuery,
+  Post as PostSchema,
+} from '@/lib/graphql/uesr.graphql'
 import { usePostsQuery } from '@/lib/graphql/post.graphql'
 import CurrentPostModal from '@/components/index/CurrentPostModal'
 import Post from '@/components/index/Post'
-import { PostSchema } from '@/data/posts'
 
-const Example: FunctionComponent = () => {
+const PostsSection: FunctionComponent = () => {
   const { data: usersData } = useUsersQuery()
   const users = usersData?.users
   const { data: postsData } = usePostsQuery()
@@ -49,4 +52,4 @@ const Example: FunctionComponent = () => {
   )
 }
 
-export default Example
+export default PostsSection

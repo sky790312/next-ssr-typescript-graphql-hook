@@ -2,14 +2,6 @@
  * fake data
  */
 
-// interface User {
-//   id: string
-//   name: string
-//   status: string
-//   friendIds: number[]
-//   friends?: User[]
-// }
-
 const usersData = [
   { id: String(1), name: 'Kevin', status: 'cached', friendIds: [2, 3] },
   { id: String(2), name: 'Leo', status: 'cached', friendIds: [1] },

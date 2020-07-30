@@ -1,8 +1,11 @@
 import { FunctionComponent } from 'react'
 import styled from 'styled-components'
-import { PostSchema } from '@/data/posts'
 import Modal from '@/components/common/Modal'
-import { usePostDetailQuery } from '@/lib/graphql/post.graphql'
+import Spinner from '@/components/common/Spinner'
+import {
+  usePostDetailQuery,
+  Post as PostSchema,
+} from '@/lib/graphql/post.graphql'
 
 const CurrentPostModal: FunctionComponent<{
   shouldShow: boolean
@@ -17,20 +20,27 @@ const CurrentPostModal: FunctionComponent<{
     variables: { postId: currentPost?.id ?? '' },
   })
 
-  if (isPostDetailLoading) {
-    console.log('in 1', isPostDetailLoading)
-  }
-
   if (isPostDetailError) {
     console.log('in 2', isPostDetailError)
   }
-  console.log(postData)
+  const postDetail = postData?.postDetail
 
   return (
     <Modal shouldShow={shouldShow} onClose={onClose}>
-      <CurrentPostModalContainer>
-        {currentPost?.title}
-      </CurrentPostModalContainer>
+      {isPostDetailLoading ? (
+        <Spinner />
+      ) : (
+        <CurrentPostModalContainer>
+          <h1>{currentPost?.title}</h1>
+          <p>Author: {postDetail?.author}</p>
+          <div>
+            <h4>recommendPosts:</h4>
+            {postDetail?.recommendPosts.map(recommendPost => (
+              <span key={recommendPost.id}>{recommendPost.title}</span>
+            ))}
+          </div>
+        </CurrentPostModalContainer>
+      )}
     </Modal>
   )
 }

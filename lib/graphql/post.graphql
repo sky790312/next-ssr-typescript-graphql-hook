@@ -2,10 +2,6 @@ query Posts {
   posts {
     id
     title
-    recommendPosts {
-      id
-      title
-    }
   }
 }
 

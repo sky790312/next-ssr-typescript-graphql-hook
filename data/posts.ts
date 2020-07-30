@@ -2,15 +2,7 @@
  * fake data
  */
 
-export interface PostSchema {
-  id: string
-  title: string
-  description: string
-  author: string
-  recommendPostIds: number[]
-}
-
-const postsData: PostSchema[] = [
+const postsData = [
   {
     id: String(1),
     title: 'Post 1',
