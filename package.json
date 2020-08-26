@@ -1,7 +1,7 @@
 {
-  "name": "kolradar-landing-page",
+  "name": "next-ssr-typescript-graphql-hook",
   "version": "1.0.0",
-  "description": "The application for ikala KOL service",
+  "description": "nextjs ssr example with local graphql api fake data.",
   "scripts": {
     "codegen": "npm run tsc:next && graphql-let",
     "dev": "npm run codegen && next",
