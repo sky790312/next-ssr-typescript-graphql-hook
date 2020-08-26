@@ -1,19 +1,34 @@
-import { QueryResolvers } from './type-defs.graphqls'
+import { QueryResolvers, MutationResolvers } from './type-defs.graphqls'
 import { ResolverContext } from './apollo'
 import usersData from '@/data/users'
 import postsData from '@/data/posts'
 
+const meUser = usersData[0]
+
 const getPostDetail = postId =>
   postsData.find(post => post.id === String(postId)) || null
 
+const addPost = ({ title }) =>
+  (postsData[postsData.length] = {
+    id: postsData[postsData.length - 1].id + 1,
+    title,
+    // createdAt: new Date().toISOString(),
+  })
+
 const Query: Required<QueryResolvers<ResolverContext>> = {
-  me: (_parent, _args, _context, _info) => usersData[0],
+  me: (_parent, _args, _context, _info) => meUser,
   users: (_parent, _args, _context, _info) => usersData,
   posts: (_parent, _args, _context, _info) => postsData,
   postDetail: (_parent, { id }, _context, _info) => getPostDetail(id),
 }
 
-// const Mutation = {}
+const Mutation: Required<MutationResolvers<ResolverContext>> = {
+  addPost: (_parent, { input }, _context) => {
+    console.log('in Mutation addPost: ', input)
+    const { title } = input
+    return addPost({ title })
+  },
+}
 
 const getUserFreinds = friendIds =>
   usersData.filter(user => friendIds.includes(Number(user.id)))
@@ -32,7 +47,7 @@ const Post = {
 
 const resolvers = {
   Query,
-  // Mutation,
+  Mutation,
   User,
   Post,
 }

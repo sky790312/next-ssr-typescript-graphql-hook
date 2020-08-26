@@ -5,10 +5,11 @@ import {
   Post as PostSchema,
 } from '@/lib/graphql/uesr.graphql'
 import { usePostsQuery } from '@/lib/graphql/post.graphql'
-import CurrentPostModal from '@/components/index/CurrentPostModal'
-import Post from '@/components/index/Post'
+import { CurrentPostModal } from '@/components/index/CurrentPostModal'
+import { AddPostModal } from '@/components/index/AddPostModal'
+import { Post } from '@/components/index/Post'
 
-const PostsSection: FunctionComponent = () => {
+export const PostsSection: FunctionComponent = () => {
   const { data: usersData } = useUsersQuery()
   const users = usersData?.users
   const { data: postsData } = usePostsQuery()
@@ -16,17 +17,26 @@ const PostsSection: FunctionComponent = () => {
   const { data: meData } = useMeQuery()
   const me = meData?.me
   const [shouldPostModalShow, setShouldPostModalShow] = useState<boolean>(false)
+  const [shouldAddModalShow, setShouldAddModalShow] = useState<boolean>(false)
   const [currentPost, setCurrentPost] = useState<PostSchema | null>(null)
+
+  const onAddBtnClick = useCallback(() => {
+    setShouldAddModalShow(true)
+  }, [])
+
+  const onAddModalClose = useCallback(() => {
+    setShouldAddModalShow(false)
+  }, [])
 
   const onPostClick = useCallback(post => {
     setCurrentPost(post)
     setShouldPostModalShow(true)
   }, [])
 
-  const onPostModalClose = () => {
+  const onPostModalClose = useCallback(() => {
     setCurrentPost(null)
     setShouldPostModalShow(false)
-  }
+  }, [])
 
   // console.log(me)
   console.log(users)
@@ -40,6 +50,8 @@ const PostsSection: FunctionComponent = () => {
       <p>
         Initial fetch at server side(ssr). (Note: You&apos;re {me?.status}).
       </p>
+      <hr />
+      <button onClick={onAddBtnClick}>add</button>
       {posts?.map(post => (
         <Post key={post.id} post={post} onPostClick={onPostClick} />
       ))}
@@ -48,8 +60,7 @@ const PostsSection: FunctionComponent = () => {
         onClose={onPostModalClose}
         currentPost={currentPost}
       />
+      <AddPostModal shouldShow={shouldAddModalShow} onClose={onAddModalClose} />
     </>
   )
 }
-
-export default PostsSection

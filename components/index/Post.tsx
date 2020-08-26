@@ -2,9 +2,8 @@ import { FunctionComponent, memo, useRef } from 'react'
 import styled from 'styled-components'
 import { Post as PostSchema } from '@/lib/graphql/uesr.graphql'
 
-// TODOS: typescript with graphql scalar type
-const Post: FunctionComponent<{
-  post: PostSchema
+export const Post: FunctionComponent<{
+  post: Pick<PostSchema, 'id' | 'title'>
   onPostClick: (post) => void
 }> = memo(({ post, onPostClick }) => {
   const refCount = useRef(0)
@@ -17,8 +16,6 @@ const Post: FunctionComponent<{
     </PostWrapper>
   )
 })
-
-export default Post
 
 const PostWrapper = styled.div`
   a {

@@ -7,7 +7,7 @@ import {
   Post as PostSchema,
 } from '@/lib/graphql/post.graphql'
 
-const CurrentPostModal: FunctionComponent<{
+export const CurrentPostModal: FunctionComponent<{
   shouldShow: boolean
   onClose: () => void
   currentPost: PostSchema | null
@@ -15,14 +15,13 @@ const CurrentPostModal: FunctionComponent<{
   const {
     data: postData,
     loading: isPostDetailLoading,
-    error: isPostDetailError,
+    error: postDetailError,
   } = usePostDetailQuery({
     variables: { postId: currentPost?.id ?? '' },
   })
 
-  if (isPostDetailError) {
-    console.log('in 2', isPostDetailError)
-  }
+  postDetailError && console.log('error: ', postDetailError)
+
   const postDetail = postData?.postDetail
 
   return (
@@ -36,7 +35,9 @@ const CurrentPostModal: FunctionComponent<{
           <div>
             <h4>recommendPosts:</h4>
             {postDetail?.recommendPosts.map(recommendPost => (
-              <span key={recommendPost.id}>{recommendPost.title}</span>
+              <p key={recommendPost.id}>
+                {recommendPost.title} - {recommendPost.author}
+              </p>
             ))}
           </div>
         </CurrentPostModalContainer>
@@ -44,8 +45,6 @@ const CurrentPostModal: FunctionComponent<{
     </Modal>
   )
 }
-
-export default CurrentPostModal
 
 const CurrentPostModalContainer = styled.div`
   h3 {

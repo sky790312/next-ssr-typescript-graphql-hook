@@ -13,10 +13,18 @@ type Post {
   recommendPosts: [Post!]!
 }
 
-
 type Query {
   posts: [Post!]!
   users: [User!]!
   me: User!
   postDetail(id: ID): Post
+}
+
+
+input AddPostInput {
+  title: String!
+}
+
+type Mutation {
+  addPost(input: AddPostInput!): Post
 }
