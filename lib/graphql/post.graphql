@@ -17,9 +17,3 @@ query PostDetail($postId: ID!) {
     }
   }
 }
-
-mutation AddPost($addPostInput: AddPostInput!) {
-  addPost(input: $addPostInput) {
-    title
-  }
-}

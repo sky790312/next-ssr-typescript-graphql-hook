@@ -18,13 +18,9 @@ type Query {
   users: [User!]!
   me: User!
   postDetail(id: ID): Post
-}
-
-
-input AddPostInput {
-  title: String!
+  viewer: User!
 }
 
 type Mutation {
-  addPost(input: AddPostInput!): Post
+  updateName(name: String!): User!
 }

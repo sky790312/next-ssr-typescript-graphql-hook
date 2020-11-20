@@ -1,0 +1,16 @@
+# import Partial from './partial.graphql'
+
+query Viewer {
+  viewer {
+    id
+    name
+  }
+}
+
+mutation UpdateName($name: String!) {
+  updateName(name: $name) {
+    id
+    name
+  }
+}
+

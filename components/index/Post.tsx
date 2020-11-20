@@ -11,7 +11,7 @@ export const Post: FunctionComponent<{
     <PostWrapper>
       <a onClick={() => onPostClick(post)}>
         <span>title: {post?.title}</span>
-        <p>{refCount.current++}</p>
+        <p>render count: {refCount.current++}</p>
       </a>
     </PostWrapper>
   )

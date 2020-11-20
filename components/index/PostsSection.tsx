@@ -6,7 +6,7 @@ import {
 } from '@/lib/graphql/uesr.graphql'
 import { usePostsQuery } from '@/lib/graphql/post.graphql'
 import { CurrentPostModal } from '@/components/index/CurrentPostModal'
-import { AddPostModal } from '@/components/index/AddPostModal'
+import { ModifyNameModal } from '@/components/index/ModifyNameModal'
 import { Post } from '@/components/index/Post'
 
 export const PostsSection: FunctionComponent = () => {
@@ -17,15 +17,17 @@ export const PostsSection: FunctionComponent = () => {
   const { data: meData } = useMeQuery()
   const me = meData?.me
   const [shouldPostModalShow, setShouldPostModalShow] = useState<boolean>(false)
-  const [shouldAddModalShow, setShouldAddModalShow] = useState<boolean>(false)
+  const [shouldModifyNameModalShow, setShouldModifyNameModalShow] = useState<
+    boolean
+  >(false)
   const [currentPost, setCurrentPost] = useState<PostSchema | null>(null)
 
-  const onAddBtnClick = useCallback(() => {
-    setShouldAddModalShow(true)
+  const onModifyBtnClick = useCallback(() => {
+    setShouldModifyNameModalShow(true)
   }, [])
 
-  const onAddModalClose = useCallback(() => {
-    setShouldAddModalShow(false)
+  const onModifyNameModalClose = useCallback(() => {
+    setShouldModifyNameModalShow(false)
   }, [])
 
   const onPostClick = useCallback(post => {
@@ -38,20 +40,20 @@ export const PostsSection: FunctionComponent = () => {
     setShouldPostModalShow(false)
   }, [])
 
-  // console.log(me)
-  console.log(users)
-  console.log(posts)
-
   return (
     <>
       <h3>
         You&apos;re signed in as id: {me?.id} - {me?.name}
       </h3>
+      <button onClick={onModifyBtnClick}>Modify your name</button>
       <p>
         Initial fetch at server side(ssr). (Note: You&apos;re {me?.status}).
       </p>
+      <ModifyNameModal
+        shouldShow={shouldModifyNameModalShow}
+        onClose={onModifyNameModalClose}
+      />
       <hr />
-      <button onClick={onAddBtnClick}>add</button>
       {posts?.map(post => (
         <Post key={post.id} post={post} onPostClick={onPostClick} />
       ))}
@@ -60,7 +62,6 @@ export const PostsSection: FunctionComponent = () => {
         onClose={onPostModalClose}
         currentPost={currentPost}
       />
-      <AddPostModal shouldShow={shouldAddModalShow} onClose={onAddModalClose} />
     </>
   )
 }
