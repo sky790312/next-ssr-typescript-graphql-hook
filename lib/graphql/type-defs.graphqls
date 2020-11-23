@@ -18,7 +18,6 @@ type Query {
   users: [User!]!
   me: User!
   postDetail(id: ID): Post
-  viewer: User!
 }
 
 type Mutation {

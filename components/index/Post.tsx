@@ -1,6 +1,6 @@
 import { FunctionComponent, memo, useRef } from 'react'
 import styled from 'styled-components'
-import { Post as PostSchema } from '@/lib/graphql/uesr.graphql'
+import { Post as PostSchema } from '@/lib/graphql/user.graphql'
 
 export const Post: FunctionComponent<{
   post: Pick<PostSchema, 'id' | 'title'>
@@ -11,13 +11,16 @@ export const Post: FunctionComponent<{
     <PostWrapper>
       <a onClick={() => onPostClick(post)}>
         <span>title: {post?.title}</span>
-        <p>render count: {refCount.current++}</p>
       </a>
+      <p>render count: {refCount.current++}</p>
     </PostWrapper>
   )
 })
 
 const PostWrapper = styled.div`
+  padding-top: 10px;
+  border-bottom: 1px solid black;
+
   a {
     cursor: pointer;
   }

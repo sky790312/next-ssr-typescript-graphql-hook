@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { useApollo } from '@/lib/graphql/apollo'
-import { UsersDocument, MeDocument } from '@/lib/graphql/uesr.graphql'
+import { UsersDocument, MeDocument } from '@/lib/graphql/user.graphql'
 import { PostsDocument } from '@/lib/graphql/post.graphql'
 import { initializeApollo } from '@/lib/graphql/apollo'
 import { PostsSection } from '@/components/index/PostsSection'

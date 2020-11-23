@@ -3,7 +3,7 @@ import {
   useUsersQuery,
   useMeQuery,
   Post as PostSchema,
-} from '@/lib/graphql/uesr.graphql'
+} from '@/lib/graphql/user.graphql'
 import { usePostsQuery } from '@/lib/graphql/post.graphql'
 import { CurrentPostModal } from '@/components/index/CurrentPostModal'
 import { ModifyNameModal } from '@/components/index/ModifyNameModal'

@@ -1,10 +1,7 @@
 import { FunctionComponent, useState, useCallback } from 'react'
 import styled from 'styled-components'
 import Modal from '@/components/common/Modal'
-import {
-  useUpdateNameMutation,
-  ViewerDocument,
-} from '@/lib/graphql/viewer.graphql'
+import { useUpdateNameMutation, MeDocument } from '@/lib/graphql/user.graphql'
 
 export const ModifyNameModal: FunctionComponent<{
   shouldShow: boolean
@@ -26,9 +23,9 @@ export const ModifyNameModal: FunctionComponent<{
           },
         },
       ) => {
-        const { viewer: newViewer } = store.readQuery({ query: ViewerDocument })
-        newViewer.name = name
-        store.writeQuery({ query: ViewerDocument, data: { viewer: newViewer } })
+        const { me: updatedMe } = store.readQuery({ query: MeDocument })
+        updatedMe.name = name
+        store.writeQuery({ query: MeDocument, data: { me: updatedMe } })
         onClose()
       },
     })
