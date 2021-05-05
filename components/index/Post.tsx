@@ -6,13 +6,11 @@ export const Post: FunctionComponent<{
   post: Pick<PostSchema, 'id' | 'title'>
   onPostClick: (post) => void
 }> = memo(({ post, onPostClick }) => {
-  const refCount = useRef(0)
   return (
     <PostWrapper>
       <a onClick={() => onPostClick(post)}>
         <span>title: {post?.title}</span>
       </a>
-      <p>render count: {refCount.current++}</p>
     </PostWrapper>
   )
 })
