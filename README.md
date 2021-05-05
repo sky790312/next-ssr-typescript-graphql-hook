@@ -2,6 +2,8 @@
 
 This is a really simple project that show the usage of Next.js with TypeScript and Styled Components.
 
+![image](https://github.com/sky790312/next-ssr-typescript-graphql-hook/blob/master/%E8%9E%A2%E5%B9%95%E5%BF%AB%E7%85%A7%202021-05-05%20%E4%B8%8B%E5%8D%8811.37.07.png)
+
 ## Deploy your own
 
 Deploy the example using [ZEIT Now](https://zeit.co/now):
